@@ -1,5 +1,5 @@
 from tkinter import *
-from classes.dbconnection import DBConnection
+from dbconnection import DBConnection
 
 class Application:
     def __init__(self, master=None):
