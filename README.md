@@ -1,1 +1,9 @@
 # SalaoCabeleleilaLeila
+Para iniciar, é necessário:
+    Executar o arquivo database.sql para criar o banco de dados
+    Alimentar o banco de dados com informações sobre funcionarios e clientes
+
+Para executar o programa, é necessário:
+    Instalar a biblioteca tkcalendar (pip install tkcalendar)
+    Instalar a biblioteca tktimepicker (pip install tktimepicker)
+    Executar o programa a partir do arquivo main.py
