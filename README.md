@@ -1,5 +1,6 @@
 # SalaoCabeleleilaLeila
 Para iniciar, é necessário:
+    Executar o Apache e o MySQL (xampp)
     Executar o arquivo database.sql para criar o banco de dados
     Alimentar o banco de dados com informações sobre funcionarios e clientes
 
