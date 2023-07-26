@@ -6,7 +6,6 @@ class DBConnection():
     def __init__(self):
         self.conexao = connection.MySQLConnection(user='root', password='', host='127.0.0.1', database='cabeleleila_leila_db')
 
-
     def testeLogin(self, login, senha):
         c = self.conexao.cursor(buffered=True)
         c.execute(f"SELECT * FROM (SELECT cliente_login AS login, cliente_nome AS nome, cliente_senha AS senha FROM clientes UNION ALL SELECT funcionario_login AS login, funcionario_nome AS nome, funcionario_senha AS senha FROM funcionarios) AS users WHERE login = '{login}' AND senha = '{senha}'")
