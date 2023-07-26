@@ -45,6 +45,7 @@ class Application:
         else:
             messagebox.showerror("Erro!","Usuário/senha incorreto!")
 
+    #Telas
     def telaInicial(self):
         self.primeiroContainer.destroy()
         self.segundoContainer.destroy()
@@ -205,56 +206,6 @@ class Application:
         Button(self.container7, text = "Atualizar", font = ("Arial", "8"), width = 12, command = self.atualizarAgendamento).pack(side=LEFT)
         Button(self.container7, text="Cancelar", font = ("Arial", "8"), width = 12, command = alterarAgendamento.destroy).pack(side=LEFT)
 
-    def verificarSemana(self):
-        hora = str(self.hora.hours24()) + ":" + str(self.hora.minutes())
-        primeiro = self.db.verificarSemana(self.data_cbb.get(), hora)
-        if primeiro is None:                 
-            self.cadastrarAgendamento() 
-        else:
-            msg = messagebox.askquestion("Confirmação", f"Você possui um agendamento para o dia {primeiro.date()} às {primeiro.time()}. Gostaria de unir os agendamentos?")
-            if msg == 'yes':
-                self.unirAgendamento()
-            else:
-                self.cadastrarAgendamento()
-
-    def cadastrarAgendamento(self):
-        hora = str(self.hora.hours24()) + ":" + str(self.hora.minutes())
-        try:
-            if self.db.cadastrarAgendamento(self.funcionarios_cbb.get(), self.data_cbb.get(), hora, self.txt_procedimentos.get()):  
-                messagebox.showinfo("Sucesso!","Agendamento feito com sucesso!")
-                criarAgendamento.destroy()
-            else:
-                messagebox.showerror("Erro!","Erro ao agendar!")
-                criarAgendamento.destroy()
-        except:
-            messagebox.showerror("Erro!","Erro ao agendar!")
-            criarAgendamento.destroy()    
-
-    def unirAgendamento(self):
-        hora = str(self.hora.hours24()) + ":" + str(self.hora.minutes())
-        try:
-            if self.db.unirAgendamento(self.data_cbb.get(), hora, self.txt_procedimentos.get()):  
-                messagebox.showinfo("Sucesso!","Agendamento adicionado com sucesso!")                
-                criarAgendamento.destroy()
-            else:
-                messagebox.showerror("Erro!","Erro ao agendar!")
-                criarAgendamento.destroy()
-        except:
-            messagebox.showerror("Erro!","Erro ao agendar!")
-            criarAgendamento.destroy()
-
-    def atualizarAgendamento(self):
-        try:
-            if self.db.atualizarAgendamento(self.data_cbb.get(), self.txt_procedimentos.get()):  
-                messagebox.showinfo("Sucesso!","Atualização feita com sucesso!") 
-                alterarAgendamento.destroy()
-            else:
-                messagebox.showerror("Erro!","Erro ao atualizar!")
-                alterarAgendamento.destroy()
-        except:
-            messagebox.showerror("Erro!","Erro ao atualizar!")
-            alterarAgendamento.destroy()
-
     def historicoAgendamento(self):
         self.fonte = ("Verdana", "8")
 
@@ -336,6 +287,57 @@ class Application:
         self.txt_procedimentos.pack(side=LEFT)
 
         Button(self.container7, text="Cancelar", font = ("Arial", "8"), width = 12, command = historicoAgendamento.destroy).pack(side=LEFT) 
+    
+    #Manipulações com BD -> Arquivo dbconnection.py
+    def verificarSemana(self):
+        hora = str(self.hora.hours24()) + ":" + str(self.hora.minutes())
+        primeiro = self.db.verificarSemana(self.data_cbb.get(), hora)
+        if primeiro is None:                 
+            self.cadastrarAgendamento() 
+        else:
+            msg = messagebox.askquestion("Confirmação", f"Você possui um agendamento para o dia {primeiro.date()} às {primeiro.time()}. Gostaria de unir os agendamentos?")
+            if msg == 'yes':
+                self.unirAgendamento()
+            else:
+                self.cadastrarAgendamento()
+
+    def cadastrarAgendamento(self):
+        hora = str(self.hora.hours24()) + ":" + str(self.hora.minutes())
+        try:
+            if self.db.cadastrarAgendamento(self.funcionarios_cbb.get(), self.data_cbb.get(), hora, self.txt_procedimentos.get()):  
+                messagebox.showinfo("Sucesso!","Agendamento feito com sucesso!")
+                criarAgendamento.destroy()
+            else:
+                messagebox.showerror("Erro!","Erro ao agendar!")
+                criarAgendamento.destroy()
+        except:
+            messagebox.showerror("Erro!","Erro ao agendar!")
+            criarAgendamento.destroy()    
+
+    def unirAgendamento(self):
+        hora = str(self.hora.hours24()) + ":" + str(self.hora.minutes())
+        try:
+            if self.db.unirAgendamento(self.data_cbb.get(), hora, self.txt_procedimentos.get()):  
+                messagebox.showinfo("Sucesso!","Agendamento adicionado com sucesso!")                
+                criarAgendamento.destroy()
+            else:
+                messagebox.showerror("Erro!","Erro ao agendar!")
+                criarAgendamento.destroy()
+        except:
+            messagebox.showerror("Erro!","Erro ao agendar!")
+            criarAgendamento.destroy()
+
+    def atualizarAgendamento(self):
+        try:
+            if self.db.atualizarAgendamento(self.data_cbb.get(), self.txt_procedimentos.get()):  
+                messagebox.showinfo("Sucesso!","Atualização feita com sucesso!") 
+                alterarAgendamento.destroy()
+            else:
+                messagebox.showerror("Erro!","Erro ao atualizar!")
+                alterarAgendamento.destroy()
+        except:
+            messagebox.showerror("Erro!","Erro ao atualizar!")
+            alterarAgendamento.destroy()
 
     def buscarAgendamento(self):
         info = self.db.listarAgendamentosData(self.data_cbb.get())
