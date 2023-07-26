@@ -244,7 +244,7 @@ class Application:
         self.container7["pady"] = 15
         self.container7.pack()
 
-        Label(self.container1, text="Alterar agendamento:", font = ("Arial", "10", "bold")).pack()
+        Label(self.container1, text="Histórico de agendamento:", font = ("Arial", "10", "bold")).pack()
 
         Label(self.container2, text="Cliente: ", font = ("Arial", "10", "bold")).pack(side=LEFT)
         self.txt_cliente_login = Entry(self.container2, width = 50, font = self.fonte)
