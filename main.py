@@ -60,16 +60,6 @@ class Application:
         agendamento_opcao.add_command(label="Novo agendamento", command=self.novoAgendamento)
         agendamento_opcao.add_command(label="Alterar agendamento", command=self.alterarAgendamento)
         agendamento_opcao.add_command(label="Histórico de agendamentos", command=self.historicoAgendamento)
-
-        operacao_opcao = Menu(barra_menu, tearoff=0)            
-        barra_menu.add_cascade(label="Operações", menu=operacao_opcao)
-        operacao_opcao.add_command(label="Alterar agendamento", command="x = 0", state=DISABLED)
-        operacao_opcao.add_command(label="Listar agendamentos", command="x = 0")
-
-        gerencia_opcao = Menu(barra_menu, tearoff=0)            
-        barra_menu.add_cascade(label="Gerência", menu=gerencia_opcao, state=DISABLED)
-        gerencia_opcao.add_command(label="Desempenho semanal", command="x = 0")
-        gerencia_opcao.add_command(label="Listar agendamentos", command="x = 0")
             
         barra_menu.add_command(label="Sair", command=root.quit)
             
@@ -78,6 +68,7 @@ class Application:
     def novoAgendamento(self):
         self.fonte = ("Verdana", "8")
 
+        global criarAgendamento 
         criarAgendamento = Toplevel(root)
         self.container1 = Frame(criarAgendamento)
         self.container1["pady"] = 20
@@ -149,6 +140,7 @@ class Application:
     def alterarAgendamento(self):
         self.fonte = ("Verdana", "8")
 
+        global alterarAgendamento
         alterarAgendamento = Toplevel(root)
         self.container1 = Frame(alterarAgendamento)
         self.container1["pady"] = 20
@@ -230,33 +222,43 @@ class Application:
         try:
             if self.db.cadastrarAgendamento(self.funcionarios_cbb.get(), self.data_cbb.get(), hora, self.txt_procedimentos.get()):  
                 messagebox.showinfo("Sucesso!","Agendamento feito com sucesso!")
+                criarAgendamento.destroy()
             else:
                 messagebox.showerror("Erro!","Erro ao agendar!")
+                criarAgendamento.destroy()
         except:
             messagebox.showerror("Erro!","Erro ao agendar!")
+            criarAgendamento.destroy()    
 
     def unirAgendamento(self):
         hora = str(self.hora.hours24()) + ":" + str(self.hora.minutes())
         try:
-            if self.db.unirAgendamento(self.funcionarios_cbb.get(), self.data_cbb.get(), hora, self.txt_procedimentos.get()):  
-                messagebox.showinfo("Sucesso!","Agendamento feito com sucesso!")
+            if self.db.unirAgendamento(self.data_cbb.get(), hora, self.txt_procedimentos.get()):  
+                messagebox.showinfo("Sucesso!","Agendamento adicionado com sucesso!")                
+                criarAgendamento.destroy()
             else:
                 messagebox.showerror("Erro!","Erro ao agendar!")
+                criarAgendamento.destroy()
         except:
             messagebox.showerror("Erro!","Erro ao agendar!")
+            criarAgendamento.destroy()
 
     def atualizarAgendamento(self):
         try:
             if self.db.atualizarAgendamento(self.data_cbb.get(), self.txt_procedimentos.get()):  
                 messagebox.showinfo("Sucesso!","Atualização feita com sucesso!") 
+                alterarAgendamento.destroy()
             else:
                 messagebox.showerror("Erro!","Erro ao atualizar!")
+                alterarAgendamento.destroy()
         except:
             messagebox.showerror("Erro!","Erro ao atualizar!")
+            alterarAgendamento.destroy()
 
     def historicoAgendamento(self):
         self.fonte = ("Verdana", "8")
 
+        global historicoAgendamento
         historicoAgendamento = Toplevel(root)
         self.container1 = Frame(historicoAgendamento)
         self.container1["pady"] = 20
