@@ -5,6 +5,7 @@ from tktimepicker import SpinTimePickerOld, constants
 from dbconnection import DBConnection
 
 class Application:    
+    db = DBConnection()
 
     def __init__(self, master=None):
         self.fontePadrao = ("Arial", "10")
@@ -36,16 +37,8 @@ class Application:
 
         Button(self.quartoContainer, text = "Autenticar", font = ("Arial", "8"), width = 12, command = self.verificarLogin).pack(side=LEFT)
         Button(self.quartoContainer, text="Fechar", font = ("Arial", "8"), width = 12, command = root.destroy).pack(side=LEFT)
-    
-    db = DBConnection()
 
-    def verificarLogin(self):
-        if self.db.testeLogin(self.login.get(), self.senha.get()):  
-            self.telaInicial()
-        else:
-            messagebox.showerror("Erro!","Usuário/senha incorreto!")
-
-    #Telas
+#Telas
     def telaInicial(self):
         self.primeiroContainer.destroy()
         self.segundoContainer.destroy()
@@ -288,7 +281,13 @@ class Application:
 
         Button(self.container7, text="Cancelar", font = ("Arial", "8"), width = 12, command = historicoAgendamento.destroy).pack(side=LEFT) 
     
-    #Manipulações com BD -> Arquivo dbconnection.py
+#Manipulações com BD -> Arquivo dbconnection.py
+    def verificarLogin(self):
+        if self.db.testeLogin(self.login.get(), self.senha.get()):  
+            self.telaInicial()
+        else:
+            messagebox.showerror("Erro!","Usuário/senha incorreto!")
+
     def verificarSemana(self):
         hora = str(self.hora.hours24()) + ":" + str(self.hora.minutes())
         primeiro = self.db.verificarSemana(self.data_cbb.get(), hora)
